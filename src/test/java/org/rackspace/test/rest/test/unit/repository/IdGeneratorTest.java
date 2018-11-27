@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.rackspace.test.rest.AppConfig;
 import org.rackspace.test.rest.repository.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
