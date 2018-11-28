@@ -32,19 +32,19 @@ public class VehicleController {
 	private VehicleResourceAssembler assembler;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Collection<VehicleResource>> findAllOrders() {
+	public ResponseEntity<Collection<VehicleResource>> findAllVehicles() {
 		List<Vehicle> vehicles = repository.findAll();
 		return new ResponseEntity<>(assembler.toResourceCollection(vehicles), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<VehicleResource> createOrder(@RequestBody Vehicle vehicle) {
-		Vehicle createdOrder = repository.create(vehicle);
-		return new ResponseEntity<>(assembler.toResource(createdOrder), HttpStatus.CREATED);
+	public ResponseEntity<VehicleResource> createVehicle(@RequestBody Vehicle vehicle) {
+		Vehicle createdVehicle = repository.create(vehicle);
+		return new ResponseEntity<>(assembler.toResource(createdVehicle), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<VehicleResource> findOrderById(@PathVariable Long id) {
+	public ResponseEntity<VehicleResource> findVehicleById(@PathVariable Long id) {
 		Optional<Vehicle> vehicle = repository.findById(id);
 
 		if (vehicle.isPresent()) {
@@ -56,18 +56,18 @@ public class VehicleController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
 		boolean wasDeleted = repository.delete(id);
 		HttpStatus responseStatus = wasDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND;
 		return new ResponseEntity<>(responseStatus);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity<VehicleResource> updateOrder(@PathVariable Long id, @RequestBody Vehicle updatedOrder) {
-		boolean wasUpdated = repository.update(id, updatedOrder);
+	public ResponseEntity<VehicleResource> updateVehicle(@PathVariable Long id, @RequestBody Vehicle updatedVehicle) {
+		boolean wasUpdated = repository.update(id, updatedVehicle);
 		
 		if (wasUpdated) {
-			return findOrderById(id);
+			return findVehicleById(id);
 		}
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

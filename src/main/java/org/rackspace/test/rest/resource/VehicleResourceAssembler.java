@@ -20,11 +20,11 @@ public class VehicleResourceAssembler extends ResourceAssembler<Vehicle, Vehicle
 		
 		VehicleResource resource = new VehicleResource(vehicle);
 		
-		final Link selfLink = entityLinks.linkToSingleResource(vehicle);
-		
-		resource.add(selfLink.withSelfRel());
-		resource.add(selfLink.withRel(UPDATE_REL));
-		resource.add(selfLink.withRel(DELETE_REL));
+//		final Link selfLink = entityLinks.linkToSingleResource(vehicle);
+//		
+//		resource.add(selfLink.withSelfRel());
+//		resource.add(selfLink.withRel(UPDATE_REL));
+//		resource.add(selfLink.withRel(DELETE_REL));
 		
 		return resource;
 	}

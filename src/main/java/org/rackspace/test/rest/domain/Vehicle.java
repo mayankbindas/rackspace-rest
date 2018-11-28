@@ -2,6 +2,18 @@ package org.rackspace.test.rest.domain;
 
 import org.rackspace.test.rest.domain.engine.VehicleEngine;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(
+		  use = JsonTypeInfo.Id.NAME, 
+		  include = JsonTypeInfo.As.PROPERTY, 
+		  property = "type")
+		@JsonSubTypes({ 
+		  @Type(value = Train.class, name = "train"), 
+		  @Type(value = Truck.class, name = "truck") 
+		})
 public abstract class Vehicle implements Identifiable {
 	
 	protected VehicleEngine vehicleEngine;

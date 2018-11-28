@@ -12,16 +12,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rackspace.test.rest.AppConfig;
 import org.rackspace.test.rest.domain.Truck;
 import org.rackspace.test.rest.domain.Vehicle;
 import org.rackspace.test.rest.repository.VehicleRepository;
+import org.rackspace.test.rest.test.unit.AppConfigUnitTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {AppConfigUnitTest.class})
 public class VehicleRepositoryTest {
 	
 	private static final long NONEXISTENT_ID = 1000;
