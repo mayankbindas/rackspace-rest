@@ -40,14 +40,6 @@ public class VehicleRepositoryTest {
 		Optional<Vehicle> vehicle = repository.findById(NONEXISTENT_ID);
 		Assert.assertFalse(vehicle.isPresent());
 	}
-
-	private void assertNoExistingOrders() {
-		assertExistingOrderCountIs(0);
-	}
-	
-	private void assertExistingOrderCountIs(int count) {
-		Assert.assertEquals(count, repository.getCount());
-	}
 	
 	@Test
 	public void testFindExistingOrderEnsureOptionalIsPresent() throws Exception {
@@ -55,47 +47,7 @@ public class VehicleRepositoryTest {
 		Optional<Vehicle> foundOrder = repository.findById(injectedOrder.getId());
 		Assert.assertTrue(foundOrder.isPresent());
 	}
-	
-	private Vehicle injectOrder() {
-		Vehicle createdOrder = repository.create(generateTestTruck());
-		return createdOrder;
-	}
-	
-	@Test
-	public void testFindExistingOrderEnsureCorrectOrderValues() throws Exception {
-		Vehicle injectedOrder = injectOrder();
-		Optional<Vehicle> foundOrder = repository.findById(injectedOrder.getId());
-		assertOrdersMatch(injectedOrder, foundOrder.get());
-	}
-	
-	private static void assertOrdersMatch(Vehicle expected, Vehicle actual) {
-		Assert.assertEquals(expected.getId(), actual.getId());
-		assertAllButIdsMatchBetweenVehicles(expected, actual);
-	}
-	
-	@Test
-	public void testFindAllWithNoExistingOrdersEnsureNoOrdersFound() throws Exception {
-		assertFindAllIsCorrectWithOrderCount(0);
-	}
-	
-	private void assertFindAllIsCorrectWithOrderCount(int count) {
-		injectGivenNumberOfOrders(count);
-		assertExistingOrderCountIs(count);
-		List<Vehicle> ordersFound = repository.findAll();
-		Assert.assertEquals(count, ordersFound.size());
-	}
-	
-	private List<Vehicle> injectGivenNumberOfOrders(int count) {
-		
-		List<Vehicle> injectedOrders = new ArrayList<>();
-		
-		for (int i = 0; i < count; i++) {
-			injectedOrders.add(injectOrder());
-		}
-		
-		return injectedOrders;
-	}
-	
+
 	@Test
 	public void testFindAllWithOneExistingOrdersEnsureOneOrdersFound() throws Exception {
 		assertFindAllIsCorrectWithOrderCount(1);
@@ -163,5 +115,53 @@ public class VehicleRepositoryTest {
 		Vehicle injectedOrder = injectOrder();
 		boolean wasUpdated = repository.update(injectedOrder.getId(), null);
 		Assert.assertFalse(wasUpdated);
+	}
+	
+	@Test
+	public void testFindExistingOrderEnsureCorrectOrderValues() throws Exception {
+		Vehicle injectedOrder = injectOrder();
+		Optional<Vehicle> foundOrder = repository.findById(injectedOrder.getId());
+		assertOrdersMatch(injectedOrder, foundOrder.get());
+	}
+
+	@Test
+	public void testFindAllWithNoExistingOrdersEnsureNoOrdersFound() throws Exception {
+		assertFindAllIsCorrectWithOrderCount(0);
+	}
+	
+	private void assertNoExistingOrders() {
+		assertExistingOrderCountIs(0);
+	}
+	
+	private void assertExistingOrderCountIs(int count) {
+		Assert.assertEquals(count, repository.getCount());
+	}
+
+	private Vehicle injectOrder() {
+		Vehicle createdOrder = repository.create(generateTestTruck());
+		return createdOrder;
+	}
+	
+	private static void assertOrdersMatch(Vehicle expected, Vehicle actual) {
+		Assert.assertEquals(expected.getId(), actual.getId());
+		assertAllButIdsMatchBetweenVehicles(expected, actual);
+	}
+	
+	private void assertFindAllIsCorrectWithOrderCount(int count) {
+		injectGivenNumberOfOrders(count);
+		assertExistingOrderCountIs(count);
+		List<Vehicle> ordersFound = repository.findAll();
+		Assert.assertEquals(count, ordersFound.size());
+	}
+	
+	private List<Vehicle> injectGivenNumberOfOrders(int count) {
+		
+		List<Vehicle> injectedOrders = new ArrayList<>();
+		
+		for (int i = 0; i < count; i++) {
+			injectedOrders.add(injectOrder());
+		}
+		
+		return injectedOrders;
 	}
 }
